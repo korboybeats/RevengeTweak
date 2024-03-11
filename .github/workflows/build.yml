@@ -73,7 +73,7 @@ jobs:
       - name: Download and Unzip Orion
         run: |
           curl -L -o Orion.zip https://github.com/theos/orion/releases/download/1.0.1/Orion_1.0.1.zip
-          unzip Orion.zip -d Orion
+          unzip Orion.zip
 
       - name: Download Discord IPA
         run: |
@@ -83,12 +83,12 @@ jobs:
         run: |
           mkdir -p ${{ github.workspace }}/build
           git clone https://github.com/Al4ise/Azule.git
-          ./Azule/azule -i discord.ipa -o ${{ github.workspace }}/build -f dev.theos.orion14_1.0.1_iphoneos-arm.deb mod.revenge.app_0.0.2_iphoneos-arm.deb
+          ./Azule/azule -i discord.ipa -o ${{ github.workspace }}/build -f ${{ github.workspace }}/dev.theos.orion14_1.0.1_iphoneos-arm.deb ${{ github.workspace }}/mod.revenge.app_0.0.2_iphoneos-arm.deb
           mv "${{ github.workspace }}/build/"*.ipa "${{ github.workspace }}/build/Revenge.ipa"
 
       - name: Upload Revenge.ipa as artifact
         uses: actions/upload-artifact@v4
         with:
             name: ipa
-            path: ./build/Revenge.ipa
+            path: ${{ github.workspace }}/build/Revenge.ipa
      
