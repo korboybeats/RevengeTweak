@@ -39,19 +39,17 @@ jobs:
         with:
           orion: "true"
 
-      - name: Build package
-        run: rm -rf packages && make clean && make package FINALPACKAGE=1 && make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
+      - name: Build packages
+        run: |
+          export PATH="$(brew --prefix make)/libexec/gnubin:$PATH"
+          export THEOS="${{ github.workspace }}/theos"
+          rm -rf packages && make clean && make package FINALPACKAGE=1 && make package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: "package"
           path: ${{ github.workspace }}/packages/*-arm.deb
-
-      - name: Build rootless package
-        run: |
-          rm -f packages/*
-          make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload rootless package
         uses: actions/upload-artifact@v4
