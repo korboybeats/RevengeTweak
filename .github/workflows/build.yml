@@ -34,10 +34,8 @@ jobs:
           path: ${{ github.workspace }}/theos
           key: ${{ runner.os }}-${{ env.upstream_heads }}
 
-      - name: Prepare Theos
-        uses: Randomblock1/theos-action@v1.3
-        with:
-          orion: "true"
+      - name: Install Theos
+        run: bash -c "$(curl -fsSL https://raw.githubusercontent.com/theos/theos/master/bin/install-theos)"
 
       - name: Build packages
         run: |
