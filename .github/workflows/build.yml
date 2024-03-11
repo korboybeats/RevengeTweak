@@ -1,16 +1,20 @@
-name: Build
+name: Build Revenge
 
-on: [push]
+on:
+   workflow_dispatch:
+    inputs:
+        ipa_url:
+            description: "Direct link to the decrypted IPA"
+            default: ""
+            required: true
+            type: string
 
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-    strategy:
-      matrix:
-        os: [macos-latest]
+  build-tweak:
+    runs-on: macos-14
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           submodules: true
 
@@ -20,7 +24,7 @@ jobs:
 
       - name: Use cache
         id: cache
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ github.workspace }}/theos
           key: ${{ runner.os }}-${{ env.upstream_heads }}
@@ -36,9 +40,9 @@ jobs:
           make package FINALPACKAGE=1
 
       - name: Upload package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: "Package built by ${{ matrix.os }}"
+          name: "package"
           path: ${{ github.workspace }}/packages/*-arm.deb
 
       - name: Build rootless package
@@ -47,7 +51,38 @@ jobs:
           make clean package FINALPACKAGE=1 THEOS_PACKAGE_SCHEME=rootless
 
       - name: Upload rootless package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: "Rootless package built by ${{ matrix.os }}"
+          name: "rootless package"
           path: ${{ github.workspace }}/packages/*-arm64.deb
+
+  build-ipa:
+    runs-on: macos-14
+    needs: build-tweak
+
+    steps:
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          merge-multiple: true
+
+      - name: Download and Unzip Orion
+        run: |
+          curl -L -o Orion.zip https://github.com/theos/orion/releases/download/1.0.1/Orion_1.0.1.zip
+          unzip Orion.zip -d Orion
+
+      - name: Download Discord IPA
+        run: |
+          curl -L -o discord.ipa ${{ github.event.inputs.ipa_url }}
+
+      - name: Clone Azule and inject tweak
+        run: |
+          git clone https://github.com/Al4ise/Azule.git
+          ./Azule/azule -i discord.ipa -o Revenge -f dev.theos.orion14_1.0.1_iphoneos-arm.deb mod.revenge.app_0.0.2_iphoneos-arm.deb
+
+      - name: Upload Revenge.ipa as artifact
+        uses: actions/upload-artifact@v4
+        with:
+            name: ipa
+            path: ./Revenge.ipa
+     

@@ -1,1 +1,1 @@
-globalThis.__vendetta_loader={name:"VendettaTweak",features:{loaderConfig:true,devtools:{prop:"__vendetta_rdc",version:"4.27.1"},themes:{prop:"__vendetta_theme"}}};
+globalThis.__revenge_loader={name:"RevengeTweak",features:{loaderConfig:true,devtools:{prop:"__revenge_rdc",version:"4.27.1"},themes:{prop:"__revenge_theme"}}};
