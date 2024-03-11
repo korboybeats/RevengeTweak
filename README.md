@@ -13,7 +13,7 @@ A rootful/rootless tweak to inject Revenge into Discord.
 
 1. Fork this repository
 1. Extract or obtain a decrypted Discord IPA. To extract the IPA from a jailbroken iDevice, we recommend [bagbak](https://github.com/ChiChou/bagbak). Upload it to a cloud service of your choice.
-1. Head to the GitHUb Actions tab, and click on the `Build Revenge` workflow. Click on `Run workflow`, and fill in the required information. The `DISCORD_IPA` field should be the direct link to the decrypted Discord. The ipa will be built and uploaded to the artifacts tab.
+1. Head to the GitHUb Actions tab, and click on the `Build Revenge` workflow. Click on `Run workflow`, and fill in the required information. The input should be the direct link to the decrypted Discord ipa. The tweaked ipa will be built and uploaded to the artifacts tab.
 1. Install the generated IPA using your preferred sideloading method.
 
 ## Building RevengeTweak locally
