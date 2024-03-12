@@ -4,6 +4,8 @@ A rootful/rootless tweak to inject Revenge into Discord.
 
 ## Installation
 
+Builds can be found in the [Actions](https://github.com/revenge-mod/RevengeTweak/actions/workflows/build.yml) tab.
+
 ### Jailbroken (Rootful/Rootless)
 
 1. Install Orion runtime via your preferred package manager, by adding `https://repo.chariz.com/` to your sources, then finding `Orion Runtime`.
