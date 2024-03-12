@@ -24,7 +24,7 @@ let defaultLoaderConfig = LoaderConfig(
 )
 
 let documentDirectory = getDocumentDirectory()
-let loaderConfigUrl = documentDirectory.appendingPathComponent("revenge_loader.json")
+let loaderConfigUrl = documentDirectory.appendingPathComponent("vendetta_loader.json")
 
 func getLoaderConfig() -> LoaderConfig {
   os_log("Getting loader config", log: revengeLog, type: .debug)

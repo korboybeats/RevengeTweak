@@ -96,10 +96,10 @@ class LoadHook: ClassHook<RCTCxxBridge> {
     orig.executeApplicationScript(script, url: url, async: async)
 
     if let themeString = try? String(
-      contentsOf: documentDirectory.appendingPathComponent("revenge_theme.json"))
+      contentsOf: documentDirectory.appendingPathComponent("vendetta_theme.json"))
     {
       orig.executeApplicationScript(
-        "globalThis.__revenge_theme=\(themeString)".data(using: .utf8)!, url: source, async: async)
+        "globalThis.__vendetta_theme=\(themeString)".data(using: .utf8)!, url: source, async: async)
     }
 
     if revenge != nil {
@@ -114,7 +114,7 @@ class LoadHook: ClassHook<RCTCxxBridge> {
 struct RevengeTweak: Tweak {
     func tweakDidActivate() {
       if let themeData = try? Data(
-      contentsOf: documentDirectory.appendingPathComponent("revenge_theme.json")) {
+      contentsOf: documentDirectory.appendingPathComponent("vendetta_theme.json")) {
         let theme = try? JSONDecoder().decode(Theme.self, from: themeData)
         if let semanticColors = theme?.data.semanticColors { swizzleDCDThemeColor(semanticColors) }
         if let rawColors = theme?.data.rawColors { swizzleUIColor(rawColors) }
